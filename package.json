@@ -1,0 +1,20 @@
+{
+  "name": "abc_socketServer",
+  "version": "1.0.0",
+  "description": "Websocket Server.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tes-minchan/abc_socketServer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tes-minchan/abc_socketServer/issues"
+  },
+  "homepage": "https://github.com/tes-minchan/abc_socketServer#readme"
+}
