@@ -54,7 +54,7 @@ wss.on('connection', function connection(ws) {
       }
     }
 
-  },1000);
+  },300);
   
 });
 
