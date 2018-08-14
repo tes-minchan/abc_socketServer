@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/tes-minchan/abc_socketServer#readme",
   "dependencies": {
+    "async": "^2.6.1",
     "bluebird": "^3.5.1",
     "redis": "^2.8.0",
+    "sleep": "^5.2.3",
+    "underscore": "^1.9.1",
     "ws": "^6.0.0"
   }
 }

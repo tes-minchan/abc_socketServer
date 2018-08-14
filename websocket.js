@@ -5,7 +5,7 @@ const redisClient = Redis.createClient(config.redisConfig);
 const redisController = require('./lib/redisTable');
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 3600 });
-let Quotes = require('./lib/quotes');
+const Quotes = require('./lib/quotes');
 
 // Get Market List from config file.
 const MarketList = config.redisTable.market;
@@ -15,13 +15,11 @@ let table = [];
 // enviroments setting.
 bluebird.promisifyAll(Redis);
 process.on('uncaughtException', function (err) {
-  // console.error(err.stack);
+  console.error(err.stack);
   console.log("Node NOT Exiting...");
 });
 
-let quotes = new Quotes();
 
-// quotes.getOrderbook('BTC');
 
 // Listening to Web connection.
 wss.on('connection', function connection(ws) {
@@ -33,28 +31,26 @@ wss.on('connection', function connection(ws) {
 
   ws.on('message', function incoming(data) {
     // Control incoming subscribe message, 
-    ws.subscribe = data;
+    let parseJson = JSON.parse(data);
+    
+    ws.subscribe = parseJson.channel;
+    ws.sub_coin  = parseJson.sub_coin;
+
   });
 
   // Send market quotes.
   setInterval(function() {
     if(ws.readyState === 1) {
-      let parseJson = JSON.parse(ws.subscribe);
 
-      if(parseJson.channel === "Arbitrage") {
-        quotes.getArbitrage(result => {
+      if(ws.subscribe === "Arbitrage") {
+        Quotes.getArbitrage(ws.sub_coin, result => {
           ws.send(JSON.stringify(result));
         });
 
-      }
-      else if(parseJson.channel === "Orderbook") {
-        quotes.getOrderbook(parseJson.currency, (result) => {
-          ws.send(JSON.stringify(result));
-        });
       }
     }
 
-  },300);
+  },1000);
   
 });
 
